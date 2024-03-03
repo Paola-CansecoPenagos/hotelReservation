@@ -1,7 +1,8 @@
 class ReservationService:
-    def __init__(self, reservation_repository, hotel_repository):
+    def __init__(self, reservation_repository, hotel_repository, email_service):
         self.reservation_repository = reservation_repository
         self.hotel_repository = hotel_repository
+        self.email_service = email_service
 
     def create_reservation(self, reservation):
         hotel = self.hotel_repository.find_by_id(reservation.hotel_id)
@@ -11,6 +12,9 @@ class ReservationService:
         room_available = self._check_room_availability(reservation.hotel_id, reservation.room_id, reservation.start_date, reservation.end_date)
         if not room_available:
             raise ValueError("La habitación no está disponible para las fechas seleccionadas")
+        
+        email_body = "Su reserva ha sido confirmada. ¡Gracias por elegir nuestro hotel!"
+        self.email_service.send_email(reservation.user_email, "Confirmación de reserva", email_body)
 
         new_reservation = self.reservation_repository.save(reservation)
         return new_reservation
@@ -22,5 +26,4 @@ class ReservationService:
             if start_date < reservation.end_date and end_date > reservation.start_date:
                 return False
 
-        return True 
-
+        return True
