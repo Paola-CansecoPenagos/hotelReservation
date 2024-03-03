@@ -6,3 +6,6 @@ class HotelService:
 
     def find_by_id(self, hotel_id: str):
         return self.hotel_repository.find_by_id(hotel_id)
+    
+    def find_by_location_and_room_count(self, location: str, room_count: int):
+        return self.hotel_repository.find_by_location_and_room_count(location, room_count)
