@@ -5,8 +5,8 @@ from application.interfaces.email_service_interface import EmailServiceInterface
 
 class EmailServiceImpl(EmailServiceInterface):
     def send_email(self, to_address: str, subject: str, body: str):
-        sender_email = "tu_email@example.com"  
-        sender_password = "tu_contraseña"  
+        sender_email = "----@gmail.com"  
+        sender_password = "-----"  
 
         msg = MIMEMultipart()
         msg['From'] = sender_email
